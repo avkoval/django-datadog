@@ -31,15 +31,13 @@ The API and app keys can be found at https://app.datadoghq.com/account/settings#
 Add the Datadog request handler to your middleware in `settings.py`.
 
 ```python
-MIDDLEWARE_CLASSES += ('datadog.middleware.DatadogMiddleware')
+MIDDLEWARE += ('datadog.middleware.DatadogMiddleware',)
 ```
 
 ## Usage
 
 Once the middlewhere installed, you'll start receiving events in your Datadog
 stream in the case of an app exception. Here's an example:
-
-![example django exception](https://dl.dropbox.com/u/126553/django-datadog.png)
 
 You will also have new timing metrics available:
 

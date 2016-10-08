@@ -21,11 +21,16 @@ dog_stats_api.start(api_key=settings.DATADOG_API_KEY)
 class DatadogMiddleware(object):
     DD_TIMING_ATTRIBUTE = '_dd_start_time'
 
-    def __init__(self):
+    def __init__(self, get_response=None):
+        self.get_response = get_response
         app_name = settings.DATADOG_APP_NAME
         self.error_metric = '{0}.errors'.format(app_name)
         self.timing_metric = '{0}.request_time'.format(app_name)
         self.event_tags = [app_name, 'exception']
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        return response
 
     def process_request(self, request):
         setattr(request, self.DD_TIMING_ATTRIBUTE, time.time())
